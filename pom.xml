@@ -29,17 +29,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>2.4</version>
         <configuration>
-          <archive>
-            <index>true</index>
-            <manifest>
-              <addClasspath>true</addClasspath>
-            </manifest>
-            <manifestEntries>
-              <mode>development</mode>
-              <url>${project.url}</url>
-              <key>value</key>
-            </manifestEntries>
-          </archive>
+          <manifest><addDefaultSpecificationEntries/></manifest>
         </configuration>
       </plugin>
       
@@ -53,25 +43,6 @@
         </configuration>
       </plugin>
       
-      <!-- plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <version>1.7</version>
-        <executions>
-          <execution>
-            <phase>install</phase>
-            <goals><goal>run</goal></goals>
-            <configuration>
-              <target if="dist.location">
-                <mkdir dir="${dist.location}/usr/share/java"/>
-                <copy file="target/jdl-api-java-${module.version}.jar"
-                      toFile="${dist.location}/usr/share/java/glite-jdl-api-java.jar"/>
-              </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin -->
-
     </plugins>
   </build>
 
