@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.glite.ce</groupId>
+    <groupId>org.glite</groupId>
     <artifactId>cream-parent</artifactId>
-    <version>1.15.1</version>
+    <version>1.0.0</version>
   </parent>
 
   <groupId>org.glite.jdl</groupId>
   <artifactId>jdl-api-java</artifactId>
-  <version>${jdlapij.version}</version>
+  <version>3.3.1</version>
   <packaging>jar</packaging>
 
   <build>
@@ -51,24 +51,13 @@
     <dependency>
       <groupId>org.condor</groupId>
       <artifactId>classad</artifactId>
-      <version>${classad.version}</version>
-      <scope>compile</scope>
     </dependency>
     
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
     </dependency>
     
   </dependencies>
 
-  <repositories>
-    <repository>
-      <id>emi-infn-repo</id>
-      <url>http://devel12.cnaf.infn.it:7444/pub/emi/packaging/maven</url>
-    </repository>
-  </repositories>
-  
 </project>
