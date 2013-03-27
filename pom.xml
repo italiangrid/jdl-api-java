@@ -2,17 +2,27 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <groupId>org.glite.jdl</groupId>
+  <artifactId>jdl-api-java</artifactId>
+  <version>3.3.1</version>
+  <packaging>jar</packaging>
+  
+  <properties>
+    <rpm.release>2</rpm.release>
+  </properties>
+  
   <parent>
     <groupId>org.glite</groupId>
     <artifactId>cream-parent</artifactId>
     <version>1.0.0</version>
   </parent>
 
-  <groupId>org.glite.jdl</groupId>
-  <artifactId>jdl-api-java</artifactId>
-  <version>3.3.1</version>
-  <packaging>jar</packaging>
-
+  <scm>
+    <connection>scm:git:git://github.com/italiangrid/jdl-api-java.git</connection>
+    <url>https://github.com/italiangrid/jdl-api-java</url>
+    <developerConnection>scm:git:ssh://git@github.com:italiangrid/jdl-api-java.git</developerConnection>
+  </scm>
+  
   <build>
     <plugins>
       
@@ -37,12 +47,81 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.8.1</version>
-        <configuration>
-          <show>protected</show>
-          <nohelp>true</nohelp>
-        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>jar</goal></goals>
+            <configuration>
+              <show>protected</show>
+              <nohelp>true</nohelp>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>rpm-maven-plugin</artifactId>
+        <version>2.1-alpha-2</version>
+        <executions>
+
+          <execution>
+            <id>jdl-api-java</id>
+            <goals><goal>attached-rpm</goal></goals>
+            <configuration>
+              <name>glite-jdl-api-java</name>
+              <summary>Java libraries handling Job Description Language</summary>
+              <description>Java libraries and utilities for dealing with Job Description Language</description>
+              <!-- changelogFile>CHANGELOG</changelogFile -->
+              <copyright>Apache Software License</copyright>
+              <release>${project.rpm.release}</release>
+              <group>System Environment/Libraries</group>
+              <mappings>
+                <mapping>
+                  <directory>/usr/share/java</directory>
+                  <filemode>755</filemode>
+                  <sources>
+                    <source>
+                      <location>${project.build.directory}/${project.artifactId}-${project.version}.jar</location>
+                      <destination>${project.artifactId}.jar</destination>
+                    </source>
+                  </sources>
+                </mapping>
+              </mappings>
+              <requires>
+                <require>jclassads</require>
+              </requires>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>jdl-api-java-doc</id>
+            <goals><goal>attached-rpm</goal></goals>
+            <configuration>
+              <name>glite-jdl-api-java-doc</name>
+              <summary>Documentation files for Job Description Language library</summary>
+              <description>Documentation files for dealing with Job Description Language</description>
+              <!-- changelogFile>CHANGELOG</changelogFile -->
+              <copyright>Apache Software License</copyright>
+              <release>${project.rpm.release}</release>
+              <group>Documentation</group>
+              <mappings>
+                <mapping>
+                  <directory>/usr/share/javadoc/glite-ce-common-java</directory>
+                  <filemode>755</filemode>
+                  <sources>
+                    <source>
+                      <location>${project.build.directory}/apidocs</location>
+                    </source>
+                  </sources>
+                </mapping>
+              </mappings>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 
