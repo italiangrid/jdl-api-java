@@ -79,7 +79,8 @@
               <mappings>
                 <mapping>
                   <directory>/usr/share/java</directory>
-                  <filemode>755</filemode>
+                  <directoryIncluded>false</directoryIncluded>
+                  <filemode>744</filemode>
                   <sources>
                     <source>
                       <location>${project.build.directory}/${project.artifactId}-${project.version}.jar</location>
@@ -99,6 +100,7 @@
             <goals><goal>attached-rpm</goal></goals>
             <configuration>
               <name>glite-jdl-api-java-doc</name>
+              <classifier>doc</classifier>
               <summary>Documentation files for Job Description Language library</summary>
               <description>Documentation files for dealing with Job Description Language</description>
               <!-- changelogFile>CHANGELOG</changelogFile -->
@@ -108,7 +110,7 @@
               <mappings>
                 <mapping>
                   <directory>/usr/share/javadoc/glite-ce-common-java</directory>
-                  <filemode>755</filemode>
+                  <filemode>744</filemode>
                   <sources>
                     <source>
                       <location>${project.build.directory}/apidocs</location>
