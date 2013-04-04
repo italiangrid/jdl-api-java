@@ -9,6 +9,7 @@
   
   <properties>
     <rpm.release>2</rpm.release>
+    <rpm.pkgname>glite-jdl-api-java</rpm.pkgname>
   </properties>
   
   <parent>
@@ -69,10 +70,9 @@
             <id>jdl-api-java</id>
             <goals><goal>attached-rpm</goal></goals>
             <configuration>
-              <name>glite-jdl-api-java</name>
+              <name>${rpm.pkgname}</name>
               <summary>Java libraries handling Job Description Language</summary>
               <description>Java libraries and utilities for dealing with Job Description Language</description>
-              <!-- changelogFile>CHANGELOG</changelogFile -->
               <copyright>Apache Software License</copyright>
               <release>${project.rpm.release}</release>
               <group>System Environment/Libraries</group>
@@ -99,11 +99,10 @@
             <id>jdl-api-java-doc</id>
             <goals><goal>attached-rpm</goal></goals>
             <configuration>
-              <name>glite-jdl-api-java-doc</name>
+              <name>${rpm.pkgname}-doc</name>
               <classifier>doc</classifier>
               <summary>Documentation files for Job Description Language library</summary>
               <description>Documentation files for dealing with Job Description Language</description>
-              <!-- changelogFile>CHANGELOG</changelogFile -->
               <copyright>Apache Software License</copyright>
               <release>${project.rpm.release}</release>
               <group>Documentation</group>
@@ -126,6 +125,57 @@
 
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>rpmbuild</id>
+      <activation>
+        <property>
+          <name>rpm.repackaging</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+              <execution>
+                <id>rpmbuild</id>
+                <phase>package</phase>
+                <goals><goal>run</goal></goals>
+                <configuration>
+                  <target>
+                    <mkdir dir="${project.build.directory}/rpmbuild/BUILD"/>
+                    <mkdir dir="${project.build.directory}/rpmbuild/RPMS"/>
+                    <mkdir dir="${project.build.directory}/rpmbuild/SOURCES"/>
+                    <mkdir dir="${project.build.directory}/rpmbuild/SPECS"/>
+                    <mkdir dir="${project.build.directory}/rpmbuild/SRPMS"/>
+                    <exec executable="/bin/tar">
+                      <arg line="--exclude .git --exclude target -zcf ${project.build.directory}/rpmbuild/SOURCES/${rpm.pkgname}.tar.gz ."/>
+                    </exec>
+                    <copy file="${project.basedir}/project/${rpm.pkgname}.spec.in" toFile="${project.build.directory}/rpmbuild/SPECS/${rpm.pkgname}.spec"/>
+                    <replace file="${project.build.directory}/rpmbuild/SPECS/${rpm.pkgname}.spec">
+                      <replacefilter token="@PKGNAME@" value="${rpm.pkgname}"/>
+                      <replacefilter token="@PKGVERSION@" value="${version}"/>
+                      <replacefilter token="@PKGRELEASE@" value="${rpm.release}"/>
+                      <replacefilter token="@MVNOPTS@" value="-Drpm.repackaging=false"/>
+                    </replace>
+                    <exec executable="/usr/bin/rpmbuild">
+                      <arg line="-ba --define '_topdir ${project.build.directory}/rpmbuild' ${project.build.directory}/rpmbuild/SPECS/${rpm.pkgname}.spec"/>
+                    </exec>
+                  </target>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <dependencies>
   
