@@ -29,6 +29,8 @@ mkdir -p %{buildroot}
 mvn @MVNOPTS@ install
 mkdir -p %{buildroot}/usr/share/java
 cp %{_builddir}/%{name}-%{version}/target/jdl-api-java-@PKGVERSION@.jar %{buildroot}/usr/share/java/glite-jdl-api-java.jar
+mkdir -p %{buildroot}/%{_javadocdir}/%{name}
+ln -s %{_builddir}/%{name}-%{version}/target/apidocs %{buildroot}/%{_javadocdir}/%{name}/html
 
 %clean
 rm -rf %{buildroot}
