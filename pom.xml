@@ -59,69 +59,6 @@
           </execution>
         </executions>
       </plugin>
-      
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>rpm-maven-plugin</artifactId>
-        <version>2.1-alpha-2</version>
-        <executions>
-
-          <execution>
-            <id>jdl-api-java</id>
-            <goals><goal>attached-rpm</goal></goals>
-            <configuration>
-              <name>${rpm.pkgname}</name>
-              <summary>Java libraries handling Job Description Language</summary>
-              <description>Java libraries and utilities for dealing with Job Description Language</description>
-              <copyright>Apache Software License</copyright>
-              <release>${project.rpm.release}</release>
-              <group>System Environment/Libraries</group>
-              <mappings>
-                <mapping>
-                  <directory>/usr/share/java</directory>
-                  <directoryIncluded>false</directoryIncluded>
-                  <filemode>744</filemode>
-                  <sources>
-                    <source>
-                      <location>${project.build.directory}/${project.artifactId}-${project.version}.jar</location>
-                      <destination>glite-jdl-api-java.jar</destination>
-                    </source>
-                  </sources>
-                </mapping>
-              </mappings>
-              <requires>
-                <require>jclassads</require>
-              </requires>
-            </configuration>
-          </execution>
-
-          <execution>
-            <id>jdl-api-java-doc</id>
-            <goals><goal>attached-rpm</goal></goals>
-            <configuration>
-              <name>${rpm.pkgname}-doc</name>
-              <classifier>doc</classifier>
-              <summary>Documentation files for Job Description Language library</summary>
-              <description>Documentation files for dealing with Job Description Language</description>
-              <copyright>Apache Software License</copyright>
-              <release>${project.rpm.release}</release>
-              <group>Documentation</group>
-              <mappings>
-                <mapping>
-                  <directory>/usr/share/javadoc/glite-ce-common-java</directory>
-                  <filemode>744</filemode>
-                  <sources>
-                    <source>
-                      <location>${project.build.directory}/apidocs</location>
-                    </source>
-                  </sources>
-                </mapping>
-              </mappings>
-            </configuration>
-          </execution>
-
-        </executions>
-      </plugin>
 
     </plugins>
   </build>
