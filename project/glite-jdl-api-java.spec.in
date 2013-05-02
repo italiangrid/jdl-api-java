@@ -1,0 +1,73 @@
+Summary: Java libraries handling Job Description Language
+Name: @PKGNAME@
+Version: @PKGVERSION@
+Release: @PKGRELEASE@
+License: Apache Software License
+Vendor: EMI
+URL: http://glite.cern.ch/
+Group: System Environment/Libraries
+BuildArch: noarch
+Requires: jclassads
+BuildRequires: maven
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+AutoReqProv: yes
+Source: %{name}.tar.gz
+
+%description
+Java libraries and utilities for dealing with Job Description Language
+
+%prep
+ 
+%setup -c -q
+
+%build
+mvn @MVNOPTS@ compile
+
+%install
+rm -rf %{buildroot}
+mkdir -p %{buildroot}
+mvn @MVNOPTS@ install
+mkdir -p %{buildroot}/usr/share/java
+cp %{_builddir}/%{name}-%{version}/target/jdl-api-java-@PKGVERSION@.jar %{buildroot}/usr/share/java/glite-jdl-api-java.jar
+mkdir -p %{buildroot}/%{_javadocdir}/%{name}
+ln -s %{_builddir}/%{name}-%{version}/target/apidocs %{buildroot}/%{_javadocdir}/%{name}/html
+
+%clean
+rm -rf %{buildroot}
+
+%files
+%defattr(-,root,root)
+/usr/share/java/glite-jdl-api-java.jar
+
+
+%package doc
+Summary: Documentation files for Job Description Language library
+Group: Documentation
+Requires: %{name}
+
+%description doc
+Documentation files for dealing with Job Description Language
+
+%files doc
+%defattr(-,root,root)
+%dir %{_javadocdir}/%{name}/html/
+%dir %{_javadocdir}/%{name}/html/resources/
+%doc %{_javadocdir}/%{name}/html/resources/*
+
+%doc %{_javadocdir}/%{name}/html/*.html
+%doc %{_javadocdir}/%{name}/html/stylesheet.css
+%doc %{_javadocdir}/%{name}/html/package-list
+%dir %{_javadocdir}/%{name}/html/org/
+%dir %{_javadocdir}/%{name}/html/org/glite/
+%dir %{_javadocdir}/%{name}/html/org/glite/jdl/
+%doc %{_javadocdir}/%{name}/html/org/glite/jdl/*.html
+%dir %{_javadocdir}/%{name}/html/org/glite/jdl/class-use/
+%doc %{_javadocdir}/%{name}/html/org/glite/jdl/class-use/*.html
+
+
+
+%changelog
+* Fri Aug 31 2012 CREAM group <cream-support@lists.infn.it> - @PKGVERSION@-@PKGRELEASE@
+- New major release
+
+
