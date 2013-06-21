@@ -4,11 +4,11 @@
 
   <groupId>org.glite.jdl</groupId>
   <artifactId>jdl-api-java</artifactId>
-  <version>3.3.1</version>
+  <version>3.3.2</version>
   <packaging>jar</packaging>
   
   <properties>
-    <rpm.release>2</rpm.release>
+    <rpm.release>1</rpm.release>
     <rpm.pkgname>glite-jdl-api-java</rpm.pkgname>
   </properties>
   
