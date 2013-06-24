@@ -1,7 +1,7 @@
 Summary: Java libraries handling Job Description Language
 Name: @PKGNAME@
 Version: @PKGVERSION@
-Release: @PKGRELEASE@
+Release: @PKGRELEASE@%{?dist}%{!?dist:.el5}
 License: Apache Software License
 Vendor: EMI
 URL: http://glite.cern.ch/
