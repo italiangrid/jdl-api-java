@@ -8,14 +8,14 @@
   <packaging>jar</packaging>
   
   <properties>
-    <rpm.release>2</rpm.release>
+    <rpm.release>3</rpm.release>
     <rpm.pkgname>glite-jdl-api-java</rpm.pkgname>
   </properties>
   
   <parent>
     <groupId>org.glite</groupId>
     <artifactId>cream-parent</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
   </parent>
 
   <scm>
